@@ -1,0 +1,585 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Administrador - Morant Jewelry</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f8f9fa;
+        }
+        
+        .sidebar {
+            transition: all 0.3s;
+        }
+        
+        /* @media (max-width: 768px) {
+            .sidebar {
+                position: fixed;
+                left: -250px;
+                top: 0;
+                z-index: 1000;
+                height: 100vh;
+            }
+            
+            .sidebar.active {
+                left: 0;
+            }
+            
+            .overlay {
+                display: none;
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background: rgba(0,0,0,0.5);
+                z-index: 999;
+            }
+            
+            .overlay.active {
+                display: block;
+            }
+        } */
+        
+        .product-row:hover {
+            background-color: #f8f9fa;
+        }
+        
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1001;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.5);
+        }
+        
+        .modal.active {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .modal-content {
+            background-color: white;
+            padding: 2rem;
+            border-radius: 0.5rem;
+            max-width: 500px;
+            width: 90%;
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+    </style>
+</head>
+<body class="bg-gray-50">
+    <!-- Overlay para móvil -->
+    <div class="overlay" id="overlay"></div>
+    
+
+    <!-- Contenido principal -->
+    <div class="md:ml-64">
+        <!-- Header móvil -->
+        <header class="bg-white shadow md:hidden p-4 flex items-center justify-between">
+            <button id="menu-toggle" class="text-brown">
+                <i class="fas fa-bars text-2xl"></i>
+            </button>
+            <h2 class="text-xl font-bold">Administración</h2>
+            <div class="w-8"></div> <!-- Spacer para centrar -->
+        </header>
+        
+        <!-- Contenido -->
+        <main class="p-6">
+            <!-- Sección: Lista de productos -->
+            <section id="productos" class="mb-12">
+                <div class="flex justify-between items-center mb-6">
+                    <h2 class="text-2xl font-bold text-brown">Productos en Catálogo</h2>
+                    <button id="refresh-btn" class="bg-gold text-white px-4 py-2 rounded hover:bg-brown transition">
+                        <i class="fas fa-sync-alt mr-2"></i> Actualizar
+                    </button>
+                </div>
+                
+                <div class="bg-white rounded-lg shadow overflow-hidden">
+                    <div class="overflow-x-auto">
+                        <table class="min-w-full divide-y divide-gray-200">
+                            <thead class="bg-gray-50">
+                                <tr>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">ID</th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Imagen</th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Nombre</th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Categoría</th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Precio</th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Acciones</th>
+                                </tr>
+                            </thead>
+                            <tbody class="bg-white divide-y divide-gray-200" id="product-table-body">
+                                <!-- Los productos se cargarán aquí -->
+                                <tr>
+                                    <td colspan="6" class="px-6 py-12 text-center text-gray-500">
+                                        <i class="fas fa-spinner fa-spin text-2xl mb-4"></i>
+                                        <p>Cargando productos...</p>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+            
+            <!-- Sección: Agregar producto -->
+            <section id="agregar" class="mb-12">
+                <h2 class="text-2xl font-bold text-brown mb-6">Agregar Nuevo Producto</h2>
+                
+                <div class="bg-white rounded-lg shadow p-6">
+                    <form id="add-product-form" enctype="multipart/form-data">
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <!-- Columna izquierda -->
+                            <div>
+                                <div class="mb-4">
+                                    <label class="block text-gray-700 mb-2" for="nombre">Nombre *</label>
+                                    <input type="text" id="nombre" name="nombre" required 
+                                           class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-gold focus:border-gold">
+                                </div>
+                                
+                                <div class="mb-4">
+                                    <label class="block text-gray-700 mb-2" for="categoria">Categoría *</label>
+                                    <select id="categoria" name="categoria" required 
+                                            class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-gold focus:border-gold">
+                                        <option value="">Seleccionar...</option>
+                                        <option value="ARETE">Aretes</option>
+                                        <option value="PULSERA">Pulseras</option>
+                                        <option value="ARRACADAS">Arracadas</option>
+                                        <option value="COLLAR">Collares</option>
+                                        <option value="TOBILLERA">Tobilleras</option>
+                                    </select>
+                                </div>
+                                
+                                <div class="mb-4">
+                                    <label class="block text-gray-700 mb-2" for="descripcion">Descripción</label>
+                                    <textarea id="descripcion" name="descripcion" rows="3"
+                                              class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-gold focus:border-gold"></textarea>
+                                </div>
+                                
+                                <div class="mb-4">
+                                    <label class="block text-gray-700 mb-2" for="material">Material</label>
+                                    <input type="text" id="material" name="material" 
+                                           class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-gold focus:border-gold"
+                                           value="ACERO INOXIDABLE">
+                                </div>
+                                
+                                <div class="mb-4">
+                                    <label class="block text-gray-700 mb-2" for="precio">Precio *</label>
+                                    <input type="number" id="precio" name="precio" required step="0.01"
+                                           class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-gold focus:border-gold">
+                                </div>
+                            </div>
+                            
+                            <!-- Columna derecha -->
+                            <div>
+                                <div class="mb-4">
+                                    <label class="block text-gray-700 mb-2" for="medidas">Medidas</label>
+                                    <input type="text" id="medidas" name="medidas" 
+                                           class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-gold focus:border-gold"
+                                           placeholder="Ej: 31X25 MM">
+                                </div>
+                                
+                                <div class="mb-4">
+                                    <label class="block text-gray-700 mb-2" for="diametro">Diámetro</label>
+                                    <input type="text" id="diametro" name="diametro" 
+                                           class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-gold focus:border-gold">
+                                </div>
+                                
+                                <div class="mb-4">
+                                    <label class="block text-gray-700 mb-2" for="longitud">Longitud</label>
+                                    <input type="text" id="longitud" name="longitud" 
+                                           class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-gold focus:border-gold">
+                                </div>
+                                
+                                <div class="mb-4">
+                                    <label class="block text-gray-700 mb-2" for="largo">Largo</label>
+                                    <input type="text" id="largo" name="largo" 
+                                           class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-gold focus:border-gold">
+                                </div>
+                                
+                                <div class="mb-4">
+                                    <label class="block text-gray-700 mb-2" for="pagina">Página</label>
+                                    <input type="number" id="pagina" name="pagina" 
+                                           class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-gold focus:border-gold">
+                                </div>
+                                
+                                <div class="mb-4">
+                                    <label class="block text-gray-700 mb-2" for="imagen">Imagen</label>
+                                    <input type="file" id="imagen" name="imagen" accept="image/*"
+                                           class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-gold focus:border-gold">
+                                    <p class="text-sm text-gray-500 mt-1">Formatos: JPG, PNG, GIF, WebP</p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="mt-8 flex justify-end space-x-4">
+                            <button type="reset" class="px-6 py-2 border border-gray-300 rounded-lg hover:bg-gray-50 transition">
+                                Limpiar
+                            </button>
+                            <button type="submit" class="px-6 py-2 bg-gold text-white rounded-lg hover:bg-brown transition">
+                                <i class="fas fa-plus-circle mr-2"></i> Agregar Producto
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </section>
+            
+            <!-- Sección: Descargar CSV -->
+            <section id="descargar">
+                <h2 class="text-2xl font-bold text-brown mb-6">Descargar Archivo CSV</h2>
+                
+                <div class="bg-white rounded-lg shadow p-6">
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <h3 class="text-lg font-semibold mb-2">Archivo actual: productos.csv</h3>
+                            <p class="text-gray-600">Puedes descargar el archivo CSV completo para respaldo o edición externa.</p>
+                        </div>
+                        <a href="/download-csv" class="bg-brown text-white px-6 py-3 rounded-lg hover:bg-gold transition inline-flex items-center">
+                            <i class="fas fa-download mr-2"></i> Descargar CSV
+                        </a>
+                    </div>
+                    
+                    <div class="mt-6 p-4 bg-beige rounded-lg">
+                        <h4 class="font-semibold mb-2">Instrucciones:</h4>
+                        <ul class="list-disc pl-5 text-gray-700 space-y-1">
+                            <li>El archivo CSV contiene todos los productos del catálogo</li>
+                            <li>Puedes editarlo con Excel, Google Sheets o cualquier editor de texto</li>
+                            <li>Guarda el formato de columnas: NOMBRE,CATEGORIA,DESCRIPCION,etc.</li>
+                            <li>Para actualizar, sube el archivo modificado reemplazando el actual</li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+    
+    <!-- Modal para editar producto -->
+    <div class="modal" id="edit-modal">
+        <div class="modal-content">
+            <div class="flex justify-between items-center mb-6">
+                <h3 class="text-xl font-bold">Editar Producto</h3>
+                <button id="close-modal" class="text-gray-500 hover:text-gray-700">
+                    <i class="fas fa-times text-2xl"></i>
+                </button>
+            </div>
+            
+            <form id="edit-product-form" enctype="multipart/form-data">
+                <input type="hidden" id="edit-id" name="id">
+                
+                <div class="space-y-4">
+                    <div>
+                        <label class="block text-gray-700 mb-2" for="edit-nombre">Nombre *</label>
+                        <input type="text" id="edit-nombre" name="nombre" required 
+                               class="w-full px-4 py-2 border rounded-lg">
+                    </div>
+                    
+                    <div class="grid grid-cols-2 gap-4">
+                        <div>
+                            <label class="block text-gray-700 mb-2" for="edit-categoria">Categoría *</label>
+                            <select id="edit-categoria" name="categoria" required 
+                                    class="w-full px-4 py-2 border rounded-lg">
+                                <option value="ARETE">Aretes</option>
+                                <option value="PULSERA">Pulseras</option>
+                                <option value="ARRACADAS">Arracadas</option>
+                            </select>
+                        </div>
+                        
+                        <div>
+                            <label class="block text-gray-700 mb-2" for="edit-precio">Precio *</label>
+                            <input type="number" id="edit-precio" name="precio" required step="0.01"
+                                   class="w-full px-4 py-2 border rounded-lg">
+                        </div>
+                    </div>
+                    
+                    <div>
+                        <label class="block text-gray-700 mb-2" for="edit-descripcion">Descripción</label>
+                        <textarea id="edit-descripcion" name="descripcion" rows="2"
+                                  class="w-full px-4 py-2 border rounded-lg"></textarea>
+                    </div>
+                    
+                    <div>
+                        <label class="block text-gray-700 mb-2" for="edit-imagen">Nueva Imagen (opcional)</label>
+                        <input type="file" id="edit-imagen" name="imagen" accept="image/*"
+                               class="w-full px-4 py-2 border rounded-lg">
+                    </div>
+                    
+                    <div class="flex justify-end space-x-4 mt-6">
+                        <button type="button" id="cancel-edit" class="px-4 py-2 border rounded-lg hover:bg-gray-50">
+                            Cancelar
+                        </button>
+                        <button type="submit" class="px-4 py-2 bg-gold text-white rounded-lg hover:bg-brown">
+                            Guardar Cambios
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+    
+    <script>
+        // Variables globales
+        let productos = [];
+        let currentProductId = null;
+        
+        // Elementos DOM
+        const sidebar = document.getElementById('sidebar');
+        const overlay = document.getElementById('overlay');
+        const menuToggle = document.getElementById('menu-toggle');
+        const refreshBtn = document.getElementById('refresh-btn');
+        const productTableBody = document.getElementById('product-table-body');
+        const addProductForm = document.getElementById('add-product-form');
+        const editModal = document.getElementById('edit-modal');
+        const closeModal = document.getElementById('close-modal');
+        const cancelEdit = document.getElementById('cancel-edit');
+        const editProductForm = document.getElementById('edit-product-form');
+        
+        // Menú móvil
+        if (menuToggle) {
+            menuToggle.addEventListener('click', () => {
+                sidebar.classList.toggle('active');
+                overlay.classList.toggle('active');
+            });
+        }
+        
+        if (overlay) {
+            overlay.addEventListener('click', () => {
+                sidebar.classList.remove('active');
+                overlay.classList.remove('active');
+            });
+        }
+        
+        // Cargar productos al iniciar
+        document.addEventListener('DOMContentLoaded', loadProducts);
+        
+        // Botón de actualizar
+        if (refreshBtn) {
+            refreshBtn.addEventListener('click', loadProducts);
+        }
+        
+        // Cargar productos desde la API
+        async function loadProducts() {
+            try {
+                productTableBody.innerHTML = `
+                    <tr>
+                        <td colspan="6" class="px-6 py-12 text-center text-gray-500">
+                            <i class="fas fa-spinner fa-spin text-2xl mb-4"></i>
+                            <p>Cargando productos...</p>
+                        </td>
+                    </tr>
+                `;
+                
+                const response = await fetch('/api/productos');
+                productos = await response.json();
+                
+                renderProductTable();
+                updateCsvInfo();
+            } catch (error) {
+                console.error('Error cargando productos:', error);
+                productTableBody.innerHTML = `
+                    <tr>
+                        <td colspan="6" class="px-6 py-12 text-center text-red-500">
+                            <i class="fas fa-exclamation-circle text-2xl mb-4"></i>
+                            <p>Error al cargar productos</p>
+                            <p class="text-sm mt-2">${error.message}</p>
+                        </td>
+                    </tr>
+                `;
+            }
+        }
+        
+        // Renderizar tabla de productos
+        function renderProductTable() {
+            if (productos.length === 0) {
+                productTableBody.innerHTML = `
+                    <tr>
+                        <td colspan="6" class="px-6 py-12 text-center text-gray-500">
+                            <i class="fas fa-box-open text-2xl mb-4"></i>
+                            <p>No hay productos en el catálogo</p>
+                            <p class="text-sm mt-2">Agrega tu primer producto usando el formulario</p>
+                        </td>
+                    </tr>
+                `;
+                return;
+            }
+            
+            let html = '';
+            productos.forEach((producto, index) => {
+                const id = index + 1; // Los IDs comienzan en 1
+                
+                html += `
+                    <tr class="product-row">
+                        <td class="px-6 py-4 whitespace-nowrap">${id}</td>
+                        <td class="px-6 py-4 whitespace-nowrap">
+                            ${producto.RUTA_IMAGEN ? 
+                                `<img src="${producto.RUTA_IMAGEN}" alt="${producto.NOMBRE}" 
+                                      class="w-12 h-12 object-cover rounded">` :
+                                `<div class="w-12 h-12 bg-gray-200 rounded flex items-center justify-center">
+                                    <i class="fas fa-gem text-gray-400"></i>
+                                </div>`
+                            }
+                        </td>
+                        <td class="px-6 py-4 whitespace-nowrap">
+                            <div class="font-medium">${producto.NOMBRE}</div>
+                            <div class="text-sm text-gray-500">${producto.MATERIAL || ''}</div>
+                        </td>
+                        <td class="px-6 py-4 whitespace-nowrap">
+                            <span class="px-2 py-1 text-xs rounded-full 
+                                ${producto.CATEGORIA === 'ARETE' ? 'bg-blue-100 text-blue-800' : 
+                                  producto.CATEGORIA === 'PULSERA' ? 'bg-green-100 text-green-800' : 
+                                  'bg-purple-100 text-purple-800'}">
+                                ${producto.CATEGORIA}
+                            </span>
+                        </td>
+                        <td class="px-6 py-4 whitespace-nowrap font-bold text-gold">
+                            $${parseFloat(producto.PRECIO).toFixed(2)}
+                        </td>
+                        <td class="px-6 py-4 whitespace-nowrap">
+                            <button onclick="editProduct(${id})" 
+                                    class="text-blue-600 hover:text-blue-900 mr-3">
+                                <i class="fas fa-edit"></i>
+                            </button>
+                            <button onclick="deleteProduct(${id})" 
+                                    class="text-red-600 hover:text-red-900">
+                                <i class="fas fa-trash"></i>
+                            </button>
+                        </td>
+                    </tr>
+                `;
+            });
+            
+            productTableBody.innerHTML = html;
+        }
+        
+        // Actualizar información del CSV
+        function updateCsvInfo() {
+            const csvInfo = document.getElementById('csv-info');
+            if (csvInfo) {
+                csvInfo.innerHTML = `
+                    <strong>${productos.length}</strong> productos<br>
+                    <span class="text-xs">Última actualización: ${new Date().toLocaleTimeString()}</span>
+                `;
+            }
+        }
+        
+        // Agregar nuevo producto
+        addProductForm.addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            const formData = new FormData(this);
+            
+            try {
+                const response = await fetch('/api/productos', {
+                    method: 'POST',
+                    body: formData
+                });
+                
+                const result = await response.json();
+                
+                if (result.success) {
+                    alert('Producto agregado correctamente');
+                    this.reset();
+                    loadProducts();
+                } else {
+                    alert('Error: ' + (result.error || 'No se pudo agregar el producto'));
+                }
+            } catch (error) {
+                console.error('Error agregando producto:', error);
+                alert('Error al agregar el producto');
+            }
+        });
+        
+        // Funciones globales para los botones de acción
+        window.editProduct = function(id) {
+            currentProductId = id;
+            const producto = productos[id - 1];
+            
+            if (!producto) return;
+            
+            // Llenar formulario de edición
+            document.getElementById('edit-id').value = id;
+            document.getElementById('edit-nombre').value = producto.NOMBRE;
+            document.getElementById('edit-categoria').value = producto.CATEGORIA;
+            document.getElementById('edit-precio').value = producto.PRECIO;
+            document.getElementById('edit-descripcion').value = producto.DESCRIPCION || '';
+            
+            // Mostrar modal
+            editModal.classList.add('active');
+            overlay.classList.add('active');
+        };
+        
+        window.deleteProduct = async function(id) {
+            if (!confirm('¿Estás seguro de eliminar este producto?')) return;
+            
+            try {
+                const response = await fetch(`/api/productos/${id}`, {
+                    method: 'DELETE'
+                });
+                
+                const result = await response.json();
+                
+                if (result.success) {
+                    alert('Producto eliminado correctamente');
+                    loadProducts();
+                } else {
+                    alert('Error: ' + (result.error || 'No se pudo eliminar el producto'));
+                }
+            } catch (error) {
+                console.error('Error eliminando producto:', error);
+                alert('Error al eliminar el producto');
+            }
+        };
+        
+        // Cerrar modal de edición
+        if (closeModal) {
+            closeModal.addEventListener('click', () => {
+                editModal.classList.remove('active');
+                overlay.classList.remove('active');
+            });
+        }
+        
+        if (cancelEdit) {
+            cancelEdit.addEventListener('click', () => {
+                editModal.classList.remove('active');
+                overlay.classList.remove('active');
+            });
+        }
+        
+        // Editar producto
+        editProductForm.addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            const formData = new FormData(this);
+            
+            try {
+                const response = await fetch(`/api/productos/${currentProductId}`, {
+                    method: 'PUT',
+                    body: formData
+                });
+                
+                const result = await response.json();
+                
+                if (result.success) {
+                    alert('Producto actualizado correctamente');
+                    editModal.classList.remove('active');
+                    overlay.classList.remove('active');
+                    loadProducts();
+                } else {
+                    alert('Error: ' + (result.error || 'No se pudo actualizar el producto'));
+                }
+            } catch (error) {
+                console.error('Error actualizando producto:', error);
+                alert('Error al actualizar el producto');
+            }
+        });
+    </script>
+</body>
+</html>
