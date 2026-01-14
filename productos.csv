@@ -1,0 +1,87 @@
+NOMBRE,CATEGORIA,DESCRIPCION,MATERIAL,PRECIO,MEDIDAS,DIAMETRO,LONGITUD,LARGO,PAGINA,IMAGEN,RUTA_IMAGEN,TIPO_IMAGEN
+ARETE LOVE,ARETE,Arete en forma de corazón.,ACERO INOXIDABLE,140.0,31X25 MM,,,,4,arete_love_1.jpeg,imagenes/ARETE/arete_love_1.jpeg,jpeg
+ARETE FLOR AZUL,ARETE,Arete en forma de flor con esmalte color azul,ACERO INOXIDABLE,150.0,25X30 MM,,,,4,arete_flor_azul_1.jpeg,imagenes/ARETE/arete_flor_azul_1.jpeg,jpeg
+ARETE AMORE,ARETE,Arete en forma de corazón.,ACERO INOXIDABLE,140.0,19X21 MM,,,,4,arete_amore_1.jpeg,imagenes/ARETE/arete_amore_1.jpeg,jpeg
+ARETE CARIÑO,ARETE,Arete en forma de corazón.,ACERO INOXIDABLE,140.0,23X27 MM,,,,4,arete_cariño_1.jpeg,imagenes/ARETE/arete_cariño_1.jpeg,jpeg
+ARETE VIENTO,ARETE,,ACERO INOXIDABLE,140.0,18X20 MM,,,,4,arete_viento_1.jpeg,imagenes/ARETE/arete_viento_1.jpeg,jpeg
+ARETE CLASSIC,ARETE,,ACERO INOXIDABLE,150.0,35X30 MM,,,,4,arete_classic_1.jpeg,imagenes/ARETE/arete_classic_1.jpeg,jpeg
+ARETE FLORA,ARETE,Arete en forma de flor,ACERO INOXIDABLE,150.0,23X23 MM,,,,4,arete_flora_1.jpeg,imagenes/ARETE/arete_flora_1.jpeg,jpeg
+ARETE AUREA,ARETE,,ACERO INOXIDABLE,150.0,31X26 MM,,,,4,arete_aurea_1.jpeg,imagenes/ARETE/arete_aurea_1.jpeg,jpeg
+ARETE SOLEA,ARETE,Arete en forma de flor,ACERO INOXIDABLE,140.0,30X35 MM,,,,5,arete_solea_1.jpeg,imagenes/ARETE/arete_solea_1.jpeg,jpeg
+ARETE ALMA,ARETE,Arete en forma de corazón,ACERO INOXIDABLE,140.0,33X25 MM,,,,5,arete_alma_1.jpeg,imagenes/ARETE/arete_alma_1.jpeg,jpeg
+ARETE LIOR,ARETE,Arete en forma de flor,ACERO INOXIDABLE,140.0,34X30 MM,,,,5,arete_lior_1.jpeg,imagenes/ARETE/arete_lior_1.jpeg,jpeg
+ARETE MARGARITA,ARETE,Arete en forma de flor con perla,ACERO INOXIDABLE,150.0,35X16 MM,,,,5,arete_margarita_1.jpeg,imagenes/ARETE/arete_margarita_1.jpeg,jpeg
+ARETE NARA,ARETE,Arete en forma de flor,ACERO INOXIDABLE,130.0,27X30 MM,,,,5,arete_nara_1.jpeg,imagenes/ARETE/arete_nara_1.jpeg,jpeg
+ARETE MÍA,ARETE,,ACERO INOXIDABLE,140.0,22X26 MM,,,,5,arete_mía_1.jpeg,imagenes/ARETE/arete_mía_1.jpeg,jpeg
+ARETE SOFT LOVE,ARETE,Arete en forma de corazón,ACERO INOXIDABLE,130.0,14X23 MM,,,,5,arete_soft_love_1.jpeg,imagenes/ARETE/arete_soft_love_1.jpeg,jpeg
+ARETE VELVET,PULSERA,Arete en forma de corazón,ACERO INOXIDABLE,150.0,20X28 MM,,,,7,arete_velvet_1.jpeg,imagenes/PULSERA/arete_velvet_1.jpeg,jpeg
+PULSERA AURA,PULSERA,,ACERO INOXIDABLE,140.0,,,17-22 CM,,7,pulsera_aura_1.jpeg,imagenes/PULSERA/pulsera_aura_1.jpeg,jpeg
+PULSERA MAR,PULSERA,,ACERO INOXIDABLE,150.0,,,17-21 CM,,7,pulsera_mar_1.jpeg,imagenes/PULSERA/pulsera_mar_1.jpeg,jpeg
+PULSERA SOLENE,PULSERA,,ACERO INOXIDABLE,140.0,,,17.5-22 CM,,7,pulsera_solene_1.jpeg,imagenes/PULSERA/pulsera_solene_1.jpeg,jpeg
+PULSERA SERPIENTE,PULSERA,Acabado serpiente,ACERO INOXIDABLE,130.0,,,18.5-22 CM,,7,pulsera_serpiente_1.jpeg,imagenes/PULSERA/pulsera_serpiente_1.jpeg,jpeg
+PULSERA NÈBULA,PULSERA,,ACERO INOXIDABLE,150.0,,,18.5 CM,,7,pulsera_nèbula_1.jpeg,imagenes/PULSERA/pulsera_nèbula_1.jpeg,jpeg
+PULSERA CUBE,PULSERA,,ACERO INOXIDABLE,140.0,,,16-22 CM,,7,pulsera_cube_1.jpeg,imagenes/PULSERA/pulsera_cube_1.jpeg,jpeg
+PULSERA,PULSERA,,,,,,,,8,pulsera_1.jpeg,imagenes/PULSERA/pulsera_1.jpeg,jpeg
+PULSERA NOVA,PULSERA,,ACERO INOXIDABLE,140.0,,,18.4 CM,,8,pulsera_nova_1.jpeg,imagenes/PULSERA/pulsera_nova_1.jpeg,jpeg
+PULSERA OLAS,PULSERA,,ACERO INOXIDABLE,140.0,,,15.5-20 CM,,8,pulsera_olas_1.jpeg,imagenes/PULSERA/pulsera_olas_1.jpeg,jpeg
+PULSERA TULIPANES,PULSERA,Dijes de tulipanes,ACERO INOXIDABLE,140.0,,,18 CM,,8,pulsera_tulipanes_1.jpeg,imagenes/PULSERA/pulsera_tulipanes_1.jpeg,jpeg
+PULSERA CYRA,PULSERA,Eslabones y broche en círculo,ACERO INOXIDABLE,130.0,,,17-20 CM,,8,pulsera_cyra_1.jpeg,imagenes/PULSERA/pulsera_cyra_1.jpeg,jpeg
+PULSERA TENIS,PULSERA,,ACERO INOXIDABLE,140.0,,,18-21 CM,,8,pulsera_tenis_1.jpeg,imagenes/PULSERA/pulsera_tenis_1.jpeg,jpeg
+PULSERA,PULSERA,,,,,,,,9,pulsera_2.jpeg,imagenes/PULSERA/pulsera_2.jpeg,jpeg
+PULSERA OJO TURCO,PULSERA,,,100.0,,,,,10,pulsera_ojo_turco_1.jpeg,imagenes/PULSERA/pulsera_ojo_turco_1.jpeg,jpeg
+PULSERA SAN BENITO,PULSERA,,ACERO INOXIDABLE,160.0,,,AJUSTABLE,,10,pulsera_san_benito_1.jpeg,imagenes/PULSERA/pulsera_san_benito_1.jpeg,jpeg
+BRAZALETE LYRA,PULSERA,,ACERO INOXIDABLE,150.0,,,AJUSTABLE,,10,brazalete_lyra_1.jpeg,imagenes/PULSERA/brazalete_lyra_1.jpeg,jpeg
+PULSERA DIJES,ARRACADAS,dijes variados,ACERO INOXIDABLE,140.0,,,19.5 CM,,12,pulsera_dijes_1.jpeg,imagenes/ARRACADAS/pulsera_dijes_1.jpeg,jpeg
+ARRACADA AURELIA,ARRACADAS,,ACERO INOXIDABLE,140.0,,2 CM,,,12,arracada_aurelia_1.jpeg,imagenes/ARRACADAS/arracada_aurelia_1.jpeg,jpeg
+ARRACADA BRILLO,ARRACADAS,Arracada con brillos y diseño de líneas,ACERO INOXIDABLE,150.0,,3 CM,,,12,arracada_brillo_1.jpeg,imagenes/ARRACADAS/arracada_brillo_1.jpeg,jpeg
+ARRACADA SERENA,ARRACADAS,,ACERO INOXIDABLE,140.0,,1.8 CM,,,12,arracada_serena_1.jpeg,imagenes/ARRACADAS/arracada_serena_1.jpeg,jpeg
+ARRACADA SOL,ARRACADAS,Arracada con diseño abstracto,ACERO INOXIDABLE,140.0,,2.2 CM,,,12,arracada_sol_1.jpeg,imagenes/ARRACADAS/arracada_sol_1.jpeg,jpeg
+ARRACADA LUNA,ARRACADAS,Arracada minimalista con diseño simple,ACERO INOXIDABLE,140.0,,2.7 CM,,,12,arracada_luna_1.jpeg,imagenes/ARRACADAS/arracada_luna_1.jpeg,jpeg
+ARRACADA RED,ARRACADAS,Arracada con diseño de red,ACERO INOXIDABLE,140.0,,1.8 CM,,,12,arracada_red_1.jpeg,imagenes/ARRACADAS/arracada_red_1.jpeg,jpeg
+ARRACADA OPHELIA,ARRACADAS,Arracada con diseño abstracto,ACERO INOXIDABLE,140.0,2X1 CM,,,,12,arracada_ophelia_1.jpeg,imagenes/ARRACADAS/arracada_ophelia_1.jpeg,jpeg
+ARRACADA LIORA,ARRACADAS,Arracada con diseño abstracto,ACERO INOXIDABLE,150.0,,2.2 CM,,,12,arracada_liora_1.jpeg,imagenes/ARRACADAS/arracada_liora_1.jpeg,jpeg
+ARRACADA FLOR,ARRACADAS,Arracadas con diseño de flor,ACERO INOXIDABLE,150.0,3X3 CM,,,,13,arracada_flor_1.jpeg,imagenes/ARRACADAS/arracada_flor_1.jpeg,jpeg
+ARETE CAMILLE,ARRACADAS,Arete en forma de cadena irregular,ACERO INOXIDABLE,150.0,,,,6 CM,13,arete_camille_1.jpeg,imagenes/ARRACADAS/arete_camille_1.jpeg,jpeg
+ARRACADA LOVE,ARRACADAS,Huggie básica con dije de corazón colgante,ACERO INOXIDABLE,140.0,,1.5 CM (LARGO 3 CM),,,13,arracada_love_1.jpeg,imagenes/ARRACADAS/arracada_love_1.jpeg,jpeg
+ARETE AMARA,ARRACADAS,,ACERO INOXIDABLE,150.0,,,,4.5 CM,13,arete_amara_1.jpeg,imagenes/ARRACADAS/arete_amara_1.jpeg,jpeg
+ARRACADA AURA,ARRACADAS,Arracada con diseño de líneas,ACERO INOXIDABLE,140.0,,2.6 CM,,,13,arracada_aura_1.jpeg,imagenes/ARRACADAS/arracada_aura_1.jpeg,jpeg
+ARRACADA PLAYA,ARRACADAS,Arracada básica con dije en forma de sol,ACERO INOXIDABLE,140.0,,2 CM LARGO: 3.8 CM,,,13,arracada_playa_1.jpeg,imagenes/ARRACADAS/arracada_playa_1.jpeg,jpeg
+ARRACADAS AZALEA,ARRACADAS,Arracadas con brillos,ACERO INOXIDABLE,150.0,2X1 CM,,,,13,arracadas_azalea_1.jpeg,imagenes/ARRACADAS/arracadas_azalea_1.jpeg,jpeg
+ARRACADAS SIENA,ARRACADAS,Arracada con diseño de líneas,ACERO INOXIDABLE,150.0,,2 CM,,,13,arracadas_siena_1.jpeg,imagenes/ARRACADAS/arracadas_siena_1.jpeg,jpeg
+ARRACADA LIBÉLULA,ARRACADAS,Huggie básica con dije de libélula,ACERO INOXIDABLE,140.0,,1 CM LARGO: 2.8 CM,,,13,arracada_libélula_1.jpeg,imagenes/ARRACADAS/arracada_libélula_1.jpeg,jpeg
+ARRACADA AZALEA,ARRACADAS,,ACERO INOXIDABLE,140.0,,3 CM,,,14,arracada_azalea_1.jpeg,imagenes/ARRACADAS/arracada_azalea_1.jpeg,jpeg
+ARETE MOÑO,ARRACADAS,Arete en forma de moño con perla,ACERO INOXIDABLE,150.0,5.5X2.7 CM,,,,14,arete_moño_1.jpeg,imagenes/ARRACADAS/arete_moño_1.jpeg,jpeg
+ARETE LUMA,ARRACADAS,Arete con brillos en forma de corazón,ACERO INOXIDABLE,130.0,,,,1.5 CM,14,arete_luma_1.jpeg,imagenes/ARRACADAS/arete_luma_1.jpeg,jpeg
+ARETE CEREZA,ARRACADAS,Arete en forma de cereza,ACERO INOXIDABLE,140.0,1X5.5 CM,,,,14,arete_cereza_1.jpeg,imagenes/ARRACADAS/arete_cereza_1.jpeg,jpeg
+ARRACADA BRILLO,ARRACADAS,Arracadas con dije,CHAPA DE ORO,90.0,23X27 MM,,,,14,arracada_brillo_2.jpeg,imagenes/ARRACADAS/arracada_brillo_2.jpeg,jpeg
+ARRACADA CORAZÓN,ARRACADAS,,ACERO INOXIDABLE,110.0,,2.5 CM,,,14,arracada_corazón_1.jpeg,imagenes/ARRACADAS/arracada_corazón_1.jpeg,jpeg
+ARRACADA LUNE,ARRACADAS,Arracadas con dije,CHAPA DE ORO,90.0,35X30 MM,,,,14,arracada_lune_1.jpeg,imagenes/ARRACADAS/arracada_lune_1.jpeg,jpeg
+ARETE FLORA,ARRACADAS,Arete en forma de flor,ACERO INOXIDABLE,150.0,23X23 MM,,,,14,arete_flora_2.jpeg,imagenes/ARRACADAS/arete_flora_2.jpeg,jpeg
+ARRACADA GRANDE,ARRACADAS,,ACERO INOXIDABLE,120.0,,6 CM,,,14,arracada_grande_1.jpeg,imagenes/ARRACADAS/arracada_grande_1.jpeg,jpeg
+HUGGIE BASICA,ARRACADAS,,ACERO INOXIDABLE,60.0,,1.8 CM,,,15,huggie_basica_1.jpeg,imagenes/ARRACADAS/huggie_basica_1.jpeg,jpeg
+ARRACADA LUMA,ARRACADAS,,ACERO INOXIDABLE,140.0,,,,3.5 CM,15,arracada_luma_1.jpeg,imagenes/ARRACADAS/arracada_luma_1.jpeg,jpeg
+ARRACADA CANASTA,ARRACADAS,Arracada en forma de canasta,ACERO INOXIDABLE,150.0,,,,2.5 CM,15,arracada_canasta_1.jpeg,imagenes/ARRACADAS/arracada_canasta_1.jpeg,jpeg
+ARRACADA SORA,ARRACADAS,,ACERO INOXIDABLE,140.0,,2.5 CM,,,15,arracada_sora_1.jpeg,imagenes/ARRACADAS/arracada_sora_1.jpeg,jpeg
+ARRACADA HALO,ARRACADAS,Arracada con acabado martillado,ACERO INOXIDABLE,140.0,,3.1 CM,,,15,arracada_halo_1.jpeg,imagenes/ARRACADAS/arracada_halo_1.jpeg,jpeg
+ARRACADA CLAIR,ARRACADAS,Arracada diseño de líneas,ACERO INOXIDABLE,140.0,,2 CM,,,15,arracada_clair_1.jpeg,imagenes/ARRACADAS/arracada_clair_1.jpeg,jpeg
+ARRACADA LÍA,ARRACADAS,,ACERO INOXIDABLE,150.0,,2.5 CM,,,15,arracada_lía_1.jpeg,imagenes/ARRACADAS/arracada_lía_1.jpeg,jpeg
+ARRACADA SERENA,ARRACADAS,,ACERO INOXIDABLE,140.0,,1.7 CM,,,15,arracada_serena_2.jpeg,imagenes/ARRACADAS/arracada_serena_2.jpeg,jpeg
+ARRACADA PLAYA,ARRACADAS,Arracada básica con dije en forma de sol,ACERO INOXIDABLE,140.0,,2 CM LARGO: 3.8 CM,,,15,arracada_playa_2.jpeg,imagenes/ARRACADAS/arracada_playa_2.jpeg,jpeg
+ARRACADA BRISA,ARRACADAS,,ACERO INOXIDABLE,140.0,,,,2.5 CM,16,arracada_brisa_1.jpeg,imagenes/ARRACADAS/arracada_brisa_1.jpeg,jpeg
+ARRACADA VAIL,ARRACADAS,,ACERO INOXIDABLE,140.0,,3.5 CM,,,16,arracada_vail_1.jpeg,imagenes/ARRACADAS/arracada_vail_1.jpeg,jpeg
+ARRACADA NAHLA,ARRACADAS,,ACERO INOXIDABLE,140.0,,2 CM,,,16,arracada_nahla_1.jpeg,imagenes/ARRACADAS/arracada_nahla_1.jpeg,jpeg
+ARRACADA SOL,ARRACADAS,Arracada con diseño de sol,ACERO INOXIDABLE,140.0,,2 CM,,,16,arracada_sol_2.jpeg,imagenes/ARRACADAS/arracada_sol_2.jpeg,jpeg
+ARRACADA ONA,ARRACADAS,,ACERO INOXIDABLE,140.0,,2.5 CM,,,16,arracada_ona_1.jpeg,imagenes/ARRACADAS/arracada_ona_1.jpeg,jpeg
+ARRACADA GRIS,ARRACADAS,,ACERO INOXIDABLE,130.0,,1.8 CM,,,16,arracada_gris_1.jpeg,imagenes/ARRACADAS/arracada_gris_1.jpeg,jpeg
+ARRACADA MÍO,ARRACADAS,Arracada diseño de corazón,ACERO INOXIDABLE,130.0,,,,3.8 CM,16,arracada_mío_1.jpeg,imagenes/ARRACADAS/arracada_mío_1.jpeg,jpeg
+ARRACADA OBSIDIA,ARRACADAS,,ACERO INOXIDABLE,150.0,,,,2.9 CM,16,arracada_obsidia_1.jpeg,imagenes/ARRACADAS/arracada_obsidia_1.jpeg,jpeg
+ARRACADA LOVE,ARRACADAS,Huggie básica con dije de corazón,ACERO INOXIDABLE,130.0,,,,3 CM,16,arracada_love_2.jpeg,imagenes/ARRACADAS/arracada_love_2.jpeg,jpeg
+ARRACADA GEO,ARRACADAS,,ACERO INOXIDABLE,120.0,,,,2.5 CM,17,arracada_geo_1.jpeg,imagenes/ARRACADAS/arracada_geo_1.jpeg,jpeg
+ARRACADA ZERI,ARRACADAS,,ACERO INOXIDABLE,140.0,,,,3 CM,17,arracada_zeri_1.jpeg,imagenes/ARRACADAS/arracada_zeri_1.jpeg,jpeg
+ARRACADA DALIA,ARRACADAS,Arracada diseño de líneas,ACERO INOXIDABLE,130.0,,2.3 CM,,,17,arracada_dalia_1.jpeg,imagenes/ARRACADAS/arracada_dalia_1.jpeg,jpeg
+ARRACADA LISA,ARRACADAS,,ACERO INOXIDABLE,140.0,,3.5 CM,,,17,arracada_lisa_1.jpeg,imagenes/ARRACADAS/arracada_lisa_1.jpeg,jpeg
+ARRACADA ECOS,ARRACADAS,,ACERO INOXIDABLE,130.0,,,,2.2 CM,17,arracada_ecos_1.jpeg,imagenes/ARRACADAS/arracada_ecos_1.jpeg,jpeg
+ARRACADA CRUZ,ARRACADAS,,ACERO INOXIDABLE,90.0,,,,2.8 CM,17,arracada_cruz_1.jpeg,imagenes/ARRACADAS/arracada_cruz_1.jpeg,jpeg
+ARRACADA CRUZ,ARRACADAS,Huggie Básica con dije de cruz,ACERO INOXIDABLE,120.0,,,,3.5 CM,17,arracada_cruz_2.jpeg,imagenes/ARRACADAS/arracada_cruz_2.jpeg,jpeg
+ARRACADA BRILLO,ARRACADAS,Huggie básica con diseño de estrella,ACERO INOXIDABLE,90.0,,,,3.5 CM,17,arracada_brillo_3.jpeg,imagenes/ARRACADAS/arracada_brillo_3.jpeg,jpeg
+ARRACADA ESTRELLA,ARRACADAS,Arracada con dije de estrella,ACERO INOXIDABLE,100.0,,,,2.8 CM,17,arracada_estrella_1.jpeg,imagenes/ARRACADAS/arracada_estrella_1.jpeg,jpeg
