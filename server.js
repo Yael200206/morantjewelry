@@ -6,7 +6,7 @@ const csv = require('csv-parser');
 const createCsvWriter = require('csv-writer').createObjectCsvWriter;
 
 const app = express();
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 8080;
 
 // Configuración de multer para subir archivos
 const storage = multer.diskStorage({
@@ -376,7 +376,8 @@ app.use((req, res) => {
 });
 
 // Iniciar servidor
-app.listen(PORT, () => {
+app.listen(PORT, '0.0.0.0', () =>{
+    console.log(`Servidor en puerto ${PORT}`);
   console.log(`=== MORANT JEWELRY SYSTEM ===`);
   console.log(`Servidor corriendo en http://localhost:${PORT}`);
   console.log(`Página principal: http://localhost:${PORT}`);

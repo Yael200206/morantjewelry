@@ -1,0 +1,8 @@
+[build]
+  command = "npm install"
+  functions = "functions" # Netlify buscará aquí las funciones
+
+[[redirects]]
+  from = "/*"
+  to = "/.netlify/functions/server"
+  status = 200
