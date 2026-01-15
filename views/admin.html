@@ -5,6 +5,20 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Administrador - Morant Jewelry</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'beige': '#f5f1ec',
+                        'beige-dark': '#e8e1d8',
+                        'gold': '#c5a572',
+                        'brown': '#5c4d3c',
+                    }
+                }
+            }
+        }
+    </script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         body {
@@ -15,35 +29,6 @@
         .sidebar {
             transition: all 0.3s;
         }
-        
-        /* @media (max-width: 768px) {
-            .sidebar {
-                position: fixed;
-                left: -250px;
-                top: 0;
-                z-index: 1000;
-                height: 100vh;
-            }
-            
-            .sidebar.active {
-                left: 0;
-            }
-            
-            .overlay {
-                display: none;
-                position: fixed;
-                top: 0;
-                left: 0;
-                width: 100%;
-                height: 100%;
-                background: rgba(0,0,0,0.5);
-                z-index: 999;
-            }
-            
-            .overlay.active {
-                display: block;
-            }
-        } */
         
         .product-row:hover {
             background-color: #f8f9fa;
@@ -75,33 +60,144 @@
             max-height: 90vh;
             overflow-y: auto;
         }
+        
+        /* Estilos para stock */
+        .stock-high {
+            background-color: #d1fae5;
+            color: #065f46;
+        }
+        
+        .stock-medium {
+            background-color: #fef3c7;
+            color: #92400e;
+        }
+        
+        .stock-low {
+            background-color: #fee2e2;
+            color: #991b1b;
+        }
+        
+        .stock-out {
+            background-color: #f3f4f6;
+            color: #6b7280;
+        }
+        
+        .stats-card {
+            transition: transform 0.3s ease;
+        }
+        
+        .stats-card:hover {
+            transform: translateY(-5px);
+        }
     </style>
 </head>
 <body class="bg-gray-50">
-    <!-- Overlay para móvil -->
-    <div class="overlay" id="overlay"></div>
-    
-
     <!-- Contenido principal -->
-    <div class="md:ml-64">
-        <!-- Header móvil -->
-        <header class="bg-white shadow md:hidden p-4 flex items-center justify-between">
-            <button id="menu-toggle" class="text-brown">
-                <i class="fas fa-bars text-2xl"></i>
-            </button>
-            <h2 class="text-xl font-bold">Administración</h2>
-            <div class="w-8"></div> <!-- Spacer para centrar -->
+    <div>
+        <!-- Header -->
+        <header class="bg-white shadow p-4">
+            <div class="container mx-auto flex justify-between items-center">
+                <h1 class="text-2xl font-bold">
+                    <span class="text-brown">MORANT</span>
+                    <span class="text-gold">JEWELRY</span>
+                    <span class="text-sm text-gray-600 ml-2">| Panel de Administración</span>
+                </h1>
+                <div class="flex space-x-4">
+                    <a href="/" class="text-brown hover:text-gold transition flex items-center">
+                        <i class="fas fa-store mr-2"></i> Ver Catálogo
+                    </a>
+                    <button id="backup-btn" class="text-green-600 hover:text-green-800 transition flex items-center">
+                        <i class="fas fa-save mr-2"></i> Backup
+                    </button>
+                </div>
+            </div>
         </header>
         
         <!-- Contenido -->
         <main class="p-6">
+            <!-- Estadísticas -->
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
+                <div class="stats-card bg-white rounded-lg shadow p-6">
+                    <div class="flex items-center">
+                        <div class="w-12 h-12 rounded-full bg-blue-100 flex items-center justify-center mr-4">
+                            <i class="fas fa-box text-blue-600"></i>
+                        </div>
+                        <div>
+                            <p class="text-gray-500 text-sm">Total Productos</p>
+                            <p class="text-2xl font-bold" id="total-products">0</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="stats-card bg-white rounded-lg shadow p-6">
+                    <div class="flex items-center">
+                        <div class="w-12 h-12 rounded-full bg-green-100 flex items-center justify-center mr-4">
+                            <i class="fas fa-check-circle text-green-600"></i>
+                        </div>
+                        <div>
+                            <p class="text-gray-500 text-sm">Con Stock</p>
+                            <p class="text-2xl font-bold" id="in-stock">0</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="stats-card bg-white rounded-lg shadow p-6">
+                    <div class="flex items-center">
+                        <div class="w-12 h-12 rounded-full bg-yellow-100 flex items-center justify-center mr-4">
+                            <i class="fas fa-exclamation-triangle text-yellow-600"></i>
+                        </div>
+                        <div>
+                            <p class="text-gray-500 text-sm">Stock Bajo</p>
+                            <p class="text-2xl font-bold" id="low-stock">0</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="stats-card bg-white rounded-lg shadow p-6">
+                    <div class="flex items-center">
+                        <div class="w-12 h-12 rounded-full bg-red-100 flex items-center justify-center mr-4">
+                            <i class="fas fa-times-circle text-red-600"></i>
+                        </div>
+                        <div>
+                            <p class="text-gray-500 text-sm">Sin Stock</p>
+                            <p class="text-2xl font-bold" id="out-stock">0</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
             <!-- Sección: Lista de productos -->
             <section id="productos" class="mb-12">
                 <div class="flex justify-between items-center mb-6">
-                    <h2 class="text-2xl font-bold text-brown">Productos en Catálogo</h2>
+                    <h2 class="text-2xl font-bold text-brown">Gestión de Productos y Stock</h2>
                     <button id="refresh-btn" class="bg-gold text-white px-4 py-2 rounded hover:bg-brown transition">
                         <i class="fas fa-sync-alt mr-2"></i> Actualizar
                     </button>
+                </div>
+                
+                <!-- Filtros -->
+                <div class="bg-white rounded-lg shadow p-4 mb-6">
+                    <div class="flex flex-wrap gap-4">
+                        <select id="filter-category" class="px-4 py-2 border rounded-lg focus:ring-2 focus:ring-gold focus:border-gold">
+                            <option value="">Todas las categorías</option>
+                            <option value="ARETE">Aretes</option>
+                            <option value="PULSERA">Pulseras</option>
+                            <option value="ARRACADAS">Arracadas</option>
+                            <option value="COLLAR">Collares</option>
+                            <option value="TOBILLERA">Tobilleras</option>
+                        </select>
+                        
+                        <select id="filter-stock" class="px-4 py-2 border rounded-lg focus:ring-2 focus:ring-gold focus:border-gold">
+                            <option value="">Todo el stock</option>
+                            <option value="high">Stock alto (>10)</option>
+                            <option value="medium">Stock medio (4-10)</option>
+                            <option value="low">Stock bajo (1-3)</option>
+                            <option value="out">Sin stock (0)</option>
+                        </select>
+                        
+                        <input type="text" id="filter-search" placeholder="Buscar producto..." 
+                               class="px-4 py-2 border rounded-lg focus:ring-2 focus:ring-gold focus:border-gold flex-grow max-w-md">
+                    </div>
                 </div>
                 
                 <div class="bg-white rounded-lg shadow overflow-hidden">
@@ -114,13 +210,13 @@
                                     <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Nombre</th>
                                     <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Categoría</th>
                                     <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Precio</th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Stock</th>
                                     <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Acciones</th>
                                 </tr>
                             </thead>
                             <tbody class="bg-white divide-y divide-gray-200" id="product-table-body">
-                                <!-- Los productos se cargarán aquí -->
                                 <tr>
-                                    <td colspan="6" class="px-6 py-12 text-center text-gray-500">
+                                    <td colspan="7" class="px-6 py-12 text-center text-gray-500">
                                         <i class="fas fa-spinner fa-spin text-2xl mb-4"></i>
                                         <p>Cargando productos...</p>
                                     </td>
@@ -171,45 +267,28 @@
                                            class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-gold focus:border-gold"
                                            value="ACERO INOXIDABLE">
                                 </div>
-                                
-                                <div class="mb-4">
-                                    <label class="block text-gray-700 mb-2" for="precio">Precio *</label>
-                                    <input type="number" id="precio" name="precio" required step="0.01"
-                                           class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-gold focus:border-gold">
-                                </div>
                             </div>
                             
                             <!-- Columna derecha -->
                             <div>
                                 <div class="mb-4">
+                                    <label class="block text-gray-700 mb-2" for="precio">Precio *</label>
+                                    <input type="number" id="precio" name="precio" required step="0.01" min="0"
+                                           class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-gold focus:border-gold">
+                                </div>
+                                
+                                <div class="mb-4">
+                                    <label class="block text-gray-700 mb-2" for="stock">Stock Inicial *</label>
+                                    <input type="number" id="stock" name="stock" required min="0" value="0"
+                                           class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-gold focus:border-gold">
+                                    <p class="text-sm text-gray-500 mt-1">0 = Sin stock (no se mostrará en el catálogo)</p>
+                                </div>
+                                
+                                <div class="mb-4">
                                     <label class="block text-gray-700 mb-2" for="medidas">Medidas</label>
                                     <input type="text" id="medidas" name="medidas" 
                                            class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-gold focus:border-gold"
                                            placeholder="Ej: 31X25 MM">
-                                </div>
-                                
-                                <div class="mb-4">
-                                    <label class="block text-gray-700 mb-2" for="diametro">Diámetro</label>
-                                    <input type="text" id="diametro" name="diametro" 
-                                           class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-gold focus:border-gold">
-                                </div>
-                                
-                                <div class="mb-4">
-                                    <label class="block text-gray-700 mb-2" for="longitud">Longitud</label>
-                                    <input type="text" id="longitud" name="longitud" 
-                                           class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-gold focus:border-gold">
-                                </div>
-                                
-                                <div class="mb-4">
-                                    <label class="block text-gray-700 mb-2" for="largo">Largo</label>
-                                    <input type="text" id="largo" name="largo" 
-                                           class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-gold focus:border-gold">
-                                </div>
-                                
-                                <div class="mb-4">
-                                    <label class="block text-gray-700 mb-2" for="pagina">Página</label>
-                                    <input type="number" id="pagina" name="pagina" 
-                                           class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-gold focus:border-gold">
                                 </div>
                                 
                                 <div class="mb-4">
@@ -233,29 +312,31 @@
                 </div>
             </section>
             
-            <!-- Sección: Descargar CSV -->
+            <!-- Sección: Gestión de Archivos -->
             <section id="descargar">
-                <h2 class="text-2xl font-bold text-brown mb-6">Descargar Archivo CSV</h2>
+                <h2 class="text-2xl font-bold text-brown mb-6">Gestión de Archivos CSV</h2>
                 
                 <div class="bg-white rounded-lg shadow p-6">
-                    <div class="flex items-center justify-between">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                         <div>
-                            <h3 class="text-lg font-semibold mb-2">Archivo actual: productos.csv</h3>
-                            <p class="text-gray-600">Puedes descargar el archivo CSV completo para respaldo o edición externa.</p>
+                            <h3 class="text-lg font-semibold mb-4">Descargar CSV Actual</h3>
+                            <p class="text-gray-600 mb-4">Descarga el archivo CSV completo para respaldo o edición externa.</p>
+                            <a href="/download-csv" class="bg-brown text-white px-6 py-3 rounded-lg hover:bg-gold transition inline-flex items-center">
+                                <i class="fas fa-download mr-2"></i> Descargar CSV
+                            </a>
                         </div>
-                        <a href="/download-csv" class="bg-brown text-white px-6 py-3 rounded-lg hover:bg-gold transition inline-flex items-center">
-                            <i class="fas fa-download mr-2"></i> Descargar CSV
-                        </a>
-                    </div>
-                    
-                    <div class="mt-6 p-4 bg-beige rounded-lg">
-                        <h4 class="font-semibold mb-2">Instrucciones:</h4>
-                        <ul class="list-disc pl-5 text-gray-700 space-y-1">
-                            <li>El archivo CSV contiene todos los productos del catálogo</li>
-                            <li>Puedes editarlo con Excel, Google Sheets o cualquier editor de texto</li>
-                            <li>Guarda el formato de columnas: NOMBRE,CATEGORIA,DESCRIPCION,etc.</li>
-                            <li>Para actualizar, sube el archivo modificado reemplazando el actual</li>
-                        </ul>
+                        
+                        <div>
+                            <h3 class="text-lg font-semibold mb-4">Subir CSV Actualizado</h3>
+                            <p class="text-gray-600 mb-4">Sube un archivo CSV actualizado para reemplazar el actual.</p>
+                            <form id="upload-csv-form" enctype="multipart/form-data" class="space-y-4">
+                                <input type="file" id="csv-file" name="csv" accept=".csv" required
+                                       class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-gold focus:border-gold">
+                                <button type="submit" class="bg-gold text-white px-6 py-2 rounded-lg hover:bg-brown transition">
+                                    <i class="fas fa-upload mr-2"></i> Subir CSV
+                                </button>
+                            </form>
+                        </div>
                     </div>
                 </div>
             </section>
@@ -279,44 +360,68 @@
                     <div>
                         <label class="block text-gray-700 mb-2" for="edit-nombre">Nombre *</label>
                         <input type="text" id="edit-nombre" name="nombre" required 
-                               class="w-full px-4 py-2 border rounded-lg">
+                               class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-gold focus:border-gold">
                     </div>
                     
                     <div class="grid grid-cols-2 gap-4">
                         <div>
                             <label class="block text-gray-700 mb-2" for="edit-categoria">Categoría *</label>
                             <select id="edit-categoria" name="categoria" required 
-                                    class="w-full px-4 py-2 border rounded-lg">
+                                    class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-gold focus:border-gold">
                                 <option value="ARETE">Aretes</option>
                                 <option value="PULSERA">Pulseras</option>
                                 <option value="ARRACADAS">Arracadas</option>
+                                <option value="COLLAR">Collares</option>
+                                <option value="TOBILLERA">Tobilleras</option>
                             </select>
                         </div>
                         
                         <div>
                             <label class="block text-gray-700 mb-2" for="edit-precio">Precio *</label>
-                            <input type="number" id="edit-precio" name="precio" required step="0.01"
-                                   class="w-full px-4 py-2 border rounded-lg">
+                            <input type="number" id="edit-precio" name="precio" required step="0.01" min="0"
+                                   class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-gold focus:border-gold">
+                        </div>
+                    </div>
+                    
+                    <div class="grid grid-cols-2 gap-4">
+                        <div>
+                            <label class="block text-gray-700 mb-2" for="edit-stock">Stock *</label>
+                            <input type="number" id="edit-stock" name="stock" required min="0" 
+                                   class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-gold focus:border-gold">
+                        </div>
+                        
+                        <div>
+                            <label class="block text-gray-700 mb-2" for="edit-material">Material</label>
+                            <input type="text" id="edit-material" name="material" 
+                                   class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-gold focus:border-gold" value="ACERO INOXIDABLE">
                         </div>
                     </div>
                     
                     <div>
                         <label class="block text-gray-700 mb-2" for="edit-descripcion">Descripción</label>
                         <textarea id="edit-descripcion" name="descripcion" rows="2"
-                                  class="w-full px-4 py-2 border rounded-lg"></textarea>
+                                  class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-gold focus:border-gold"></textarea>
+                    </div>
+                    
+                    <div>
+                        <label class="block text-gray-700 mb-2" for="edit-medidas">Medidas</label>
+                        <input type="text" id="edit-medidas" name="medidas" 
+                               class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-gold focus:border-gold"
+                               placeholder="Ej: 31X25 MM">
                     </div>
                     
                     <div>
                         <label class="block text-gray-700 mb-2" for="edit-imagen">Nueva Imagen (opcional)</label>
                         <input type="file" id="edit-imagen" name="imagen" accept="image/*"
-                               class="w-full px-4 py-2 border rounded-lg">
+                               class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-gold focus:border-gold">
+                        <p class="text-sm text-gray-500 mt-1">Dejar vacío para mantener la imagen actual</p>
                     </div>
                     
                     <div class="flex justify-end space-x-4 mt-6">
-                        <button type="button" id="cancel-edit" class="px-4 py-2 border rounded-lg hover:bg-gray-50">
+                        <button type="button" id="cancel-edit" class="px-4 py-2 border rounded-lg hover:bg-gray-50 transition">
                             Cancelar
                         </button>
-                        <button type="submit" class="px-4 py-2 bg-gold text-white rounded-lg hover:bg-brown">
+                        <button type="submit" class="px-4 py-2 bg-gold text-white rounded-lg hover:bg-brown transition">
                             Guardar Cambios
                         </button>
                     </div>
@@ -325,159 +430,707 @@
         </div>
     </div>
     
-    <script>
-        // Variables globales
-        let productos = [];
-        let currentProductId = null;
-        
-        // Elementos DOM
-        const sidebar = document.getElementById('sidebar');
-        const overlay = document.getElementById('overlay');
-        const menuToggle = document.getElementById('menu-toggle');
-        const refreshBtn = document.getElementById('refresh-btn');
-        const productTableBody = document.getElementById('product-table-body');
-        const addProductForm = document.getElementById('add-product-form');
-        const editModal = document.getElementById('edit-modal');
-        const closeModal = document.getElementById('close-modal');
-        const cancelEdit = document.getElementById('cancel-edit');
-        const editProductForm = document.getElementById('edit-product-form');
-        
-        // Menú móvil
-        if (menuToggle) {
-            menuToggle.addEventListener('click', () => {
-                sidebar.classList.toggle('active');
-                overlay.classList.toggle('active');
-            });
-        }
-        
-        if (overlay) {
-            overlay.addEventListener('click', () => {
-                sidebar.classList.remove('active');
-                overlay.classList.remove('active');
-            });
-        }
-        
-        // Cargar productos al iniciar
-        document.addEventListener('DOMContentLoaded', loadProducts);
-        
-        // Botón de actualizar
-        if (refreshBtn) {
-            refreshBtn.addEventListener('click', loadProducts);
-        }
-        
-        // Cargar productos desde la API
-        async function loadProducts() {
+    <!-- Modal para ajustar stock -->
+    <div class="modal" id="stock-modal">
+        <div class="modal-content">
+            <div class="flex justify-between items-center mb-6">
+                <h3 class="text-xl font-bold">Ajustar Stock</h3>
+                <button id="close-stock-modal" class="text-gray-500 hover:text-gray-700">
+                    <i class="fas fa-times text-2xl"></i>
+                </button>
+            </div>
+            
+            <form id="stock-form">
+                <input type="hidden" id="stock-product-id">
+                
+                <div class="text-center mb-6">
+                    <h4 class="font-bold text-lg" id="stock-product-name"></h4>
+                    <p class="text-gray-600" id="stock-product-category"></p>
+                </div>
+                
+                <div class="space-y-4">
+                    <div>
+                        <label class="block text-gray-700 mb-2" for="current-stock">Stock Actual</label>
+                        <input type="number" id="current-stock" disabled
+                               class="w-full px-4 py-2 border rounded-lg bg-gray-100">
+                    </div>
+                    
+                    <div>
+                        <label class="block text-gray-700 mb-2" for="stock-action">Acción</label>
+                        <select id="stock-action" class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-gold focus:border-gold">
+                            <option value="set">Establecer nuevo valor</option>
+                            <option value="add">Agregar cantidad</option>
+                            <option value="subtract">Restar cantidad</option>
+                        </select>
+                    </div>
+                    
+                    <div>
+                        <label class="block text-gray-700 mb-2" for="stock-quantity">Cantidad</label>
+                        <input type="number" id="stock-quantity" min="0" value="0"
+                               class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-gold focus:border-gold">
+                    </div>
+                    
+                    <div class="bg-gray-50 p-4 rounded-lg">
+                        <p class="font-semibold mb-2">Nuevo stock estimado:</p>
+                        <p class="text-2xl font-bold text-gold" id="estimated-stock">0</p>
+                    </div>
+                    
+                    <div class="flex justify-end space-x-4 mt-6">
+                        <button type="button" id="cancel-stock" class="px-4 py-2 border rounded-lg hover:bg-gray-50 transition">
+                            Cancelar
+                        </button>
+                        <button type="submit" class="px-4 py-2 bg-gold text-white rounded-lg hover:bg-brown transition">
+                            Aplicar Cambios
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+    
+   <script>
+    // Variables globales
+    let productos = [];
+    let currentProductId = null;
+    
+    // Elementos DOM
+    const refreshBtn = document.getElementById('refresh-btn');
+    const productTableBody = document.getElementById('product-table-body');
+    const addProductForm = document.getElementById('add-product-form');
+    const editModal = document.getElementById('edit-modal');
+    const closeModal = document.getElementById('close-modal');
+    const cancelEdit = document.getElementById('cancel-edit');
+    const editProductForm = document.getElementById('edit-product-form');
+    const stockModal = document.getElementById('stock-modal');
+    const closeStockModal = document.getElementById('close-stock-modal');
+    const cancelStock = document.getElementById('cancel-stock');
+    const stockForm = document.getElementById('stock-form');
+    const stockAction = document.getElementById('stock-action');
+    const stockQuantity = document.getElementById('stock-quantity');
+    const estimatedStock = document.getElementById('estimated-stock');
+    const currentStockInput = document.getElementById('current-stock');
+    const filterCategory = document.getElementById('filter-category');
+    const filterStock = document.getElementById('filter-stock');
+    const filterSearch = document.getElementById('filter-search');
+    const backupBtn = document.getElementById('backup-btn');
+    
+    // Cargar productos al iniciar
+    document.addEventListener('DOMContentLoaded', loadProducts);
+    
+    // Botón de actualizar
+    if (refreshBtn) {
+        refreshBtn.addEventListener('click', loadProducts);
+    }
+    
+    // Botón de backup
+    if (backupBtn) {
+        backupBtn.addEventListener('click', async () => {
             try {
-                productTableBody.innerHTML = `
-                    <tr>
-                        <td colspan="6" class="px-6 py-12 text-center text-gray-500">
-                            <i class="fas fa-spinner fa-spin text-2xl mb-4"></i>
-                            <p>Cargando productos...</p>
-                        </td>
-                    </tr>
-                `;
+                const response = await fetch('/backup-csv');
+                const result = await response.json();
                 
-                const response = await fetch('/api/productos');
-                productos = await response.json();
-                
-                renderProductTable();
-                updateCsvInfo();
+                if (result.success) {
+                    alert(`✅ Backup creado correctamente\nArchivo: ${result.backupFile}`);
+                } else {
+                    alert('❌ Error: ' + (result.error || 'No se pudo crear el backup'));
+                }
             } catch (error) {
-                console.error('Error cargando productos:', error);
-                productTableBody.innerHTML = `
-                    <tr>
-                        <td colspan="6" class="px-6 py-12 text-center text-red-500">
-                            <i class="fas fa-exclamation-circle text-2xl mb-4"></i>
-                            <p>Error al cargar productos</p>
-                            <p class="text-sm mt-2">${error.message}</p>
-                        </td>
-                    </tr>
-                `;
+                console.error('Error creando backup:', error);
+                alert('❌ Error al crear el backup');
             }
-        }
-        
-        // Renderizar tabla de productos
-        function renderProductTable() {
-            if (productos.length === 0) {
-                productTableBody.innerHTML = `
-                    <tr>
-                        <td colspan="6" class="px-6 py-12 text-center text-gray-500">
-                            <i class="fas fa-box-open text-2xl mb-4"></i>
-                            <p>No hay productos en el catálogo</p>
-                            <p class="text-sm mt-2">Agrega tu primer producto usando el formulario</p>
-                        </td>
-                    </tr>
-                `;
-                return;
+        });
+    }
+    
+    // Cargar productos desde la API
+    async function loadProducts() {
+        try {
+            productTableBody.innerHTML = `
+                <tr>
+                    <td colspan="7" class="px-6 py-12 text-center text-gray-500">
+                        <i class="fas fa-spinner fa-spin text-2xl mb-4"></i>
+                        <p>Cargando productos...</p>
+                    </td>
+                </tr>
+            `;
+            
+            const response = await fetch('/api/productos');
+            if (!response.ok) {
+                throw new Error(`HTTP ${response.status}: ${response.statusText}`);
             }
             
-            let html = '';
-            productos.forEach((producto, index) => {
-                const id = index + 1; // Los IDs comienzan en 1
-                
-                html += `
-                    <tr class="product-row">
-                        <td class="px-6 py-4 whitespace-nowrap">${id}</td>
-                        <td class="px-6 py-4 whitespace-nowrap">
-                            ${producto.RUTA_IMAGEN ? 
-                                `<img src="${producto.RUTA_IMAGEN}" alt="${producto.NOMBRE}" 
-                                      class="w-12 h-12 object-cover rounded">` :
-                                `<div class="w-12 h-12 bg-gray-200 rounded flex items-center justify-center">
-                                    <i class="fas fa-gem text-gray-400"></i>
-                                </div>`
-                            }
-                        </td>
-                        <td class="px-6 py-4 whitespace-nowrap">
-                            <div class="font-medium">${producto.NOMBRE}</div>
-                            <div class="text-sm text-gray-500">${producto.MATERIAL || ''}</div>
-                        </td>
-                        <td class="px-6 py-4 whitespace-nowrap">
-                            <span class="px-2 py-1 text-xs rounded-full 
-                                ${producto.CATEGORIA === 'ARETE' ? 'bg-blue-100 text-blue-800' : 
-                                  producto.CATEGORIA === 'PULSERA' ? 'bg-green-100 text-green-800' : 
-                                  'bg-purple-100 text-purple-800'}">
-                                ${producto.CATEGORIA}
-                            </span>
-                        </td>
-                        <td class="px-6 py-4 whitespace-nowrap font-bold text-gold">
-                            $${parseFloat(producto.PRECIO).toFixed(2)}
-                        </td>
-                        <td class="px-6 py-4 whitespace-nowrap">
-                            <button onclick="editProduct(${id})" 
-                                    class="text-blue-600 hover:text-blue-900 mr-3">
-                                <i class="fas fa-edit"></i>
-                            </button>
-                            <button onclick="deleteProduct(${id})" 
-                                    class="text-red-600 hover:text-red-900">
-                                <i class="fas fa-trash"></i>
-                            </button>
-                        </td>
-                    </tr>
-                `;
+            productos = await response.json();
+            
+            // Debug: verificar que los productos tienen stock
+            console.log('Productos cargados:', productos.length);
+            productos.forEach((p, i) => {
+                console.log(`Producto ${i}: ${p.NOMBRE} - Stock: ${p.STOCK} (tipo: ${typeof p.STOCK})`);
             });
             
-            productTableBody.innerHTML = html;
+            updateStatistics();
+            renderProductTable();
+            
+        } catch (error) {
+            console.error('Error cargando productos:', error);
+            productTableBody.innerHTML = `
+                <tr>
+                    <td colspan="7" class="px-6 py-12 text-center text-red-500">
+                        <i class="fas fa-exclamation-circle text-2xl mb-4"></i>
+                        <p>Error al cargar productos</p>
+                        <p class="text-sm mt-2">${error.message}</p>
+                        <p class="text-sm mt-1">Verifica que el servidor esté corriendo en http://localhost:3000</p>
+                    </td>
+                </tr>
+            `;
+        }
+    }
+    
+    // Actualizar estadísticas
+    function updateStatistics() {
+        let total = productos.length;
+        let inStock = 0;
+        let lowStock = 0;
+        let outStock = 0;
+        
+        productos.forEach(producto => {
+            const stock = parseInt(producto.STOCK) || 0;
+            
+            if (stock > 10) {
+                inStock++;
+            } else if (stock > 3 && stock <= 10) {
+                inStock++;
+                lowStock++;
+            } else if (stock > 0 && stock <= 3) {
+                inStock++;
+                lowStock++;
+            } else if (stock === 0) {
+                outStock++;
+            }
+        });
+        
+        document.getElementById('total-products').textContent = total;
+        document.getElementById('in-stock').textContent = inStock;
+        document.getElementById('low-stock').textContent = lowStock;
+        document.getElementById('out-stock').textContent = outStock;
+    }
+    
+    // Obtener clase CSS para stock
+    function getStockClass(stock) {
+        const stockNum = parseInt(stock) || 0;
+        
+        if (stockNum > 10) {
+            return 'stock-high';
+        } else if (stockNum > 3 && stockNum <= 10) {
+            return 'stock-medium';
+        } else if (stockNum > 0 && stockNum <= 3) {
+            return 'stock-low';
+        } else {
+            return 'stock-out';
+        }
+    }
+    
+    // Obtener texto para stock
+    function getStockText(stock) {
+        const stockNum = parseInt(stock) || 0;
+        
+        if (stockNum > 10) {
+            return stockNum;
+        } else if (stockNum > 0) {
+            return `${stockNum}`;
+        } else {
+            return '0';
+        }
+    }
+    
+    // Filtrar productos
+    function filterProducts() {
+        const category = filterCategory.value;
+        const stockFilter = filterStock.value;
+        const search = filterSearch.value.toLowerCase();
+        
+        let filtered = productos;
+        
+        // Filtrar por categoría
+        if (category) {
+            filtered = filtered.filter(p => p.CATEGORIA === category);
         }
         
-        // Actualizar información del CSV
-        function updateCsvInfo() {
-            const csvInfo = document.getElementById('csv-info');
-            if (csvInfo) {
-                csvInfo.innerHTML = `
-                    <strong>${productos.length}</strong> productos<br>
-                    <span class="text-xs">Última actualización: ${new Date().toLocaleTimeString()}</span>
-                `;
+        // Filtrar por stock
+        if (stockFilter) {
+            filtered = filtered.filter(p => {
+                const stock = parseInt(p.STOCK) || 0;
+                switch(stockFilter) {
+                    case 'high': return stock > 10;
+                    case 'medium': return stock > 3 && stock <= 10;
+                    case 'low': return stock > 0 && stock <= 3;
+                    case 'out': return stock === 0;
+                    default: return true;
+                }
+            });
+        }
+        
+        // Filtrar por búsqueda
+        if (search) {
+            filtered = filtered.filter(p => 
+                p.NOMBRE.toLowerCase().includes(search) ||
+                (p.DESCRIPCION && p.DESCRIPCION.toLowerCase().includes(search)) ||
+                (p.MATERIAL && p.MATERIAL.toLowerCase().includes(search))
+            );
+        }
+        
+        return filtered;
+    }
+    
+    // Renderizar tabla de productos
+    function renderProductTable() {
+        const filteredProducts = filterProducts();
+        
+        if (filteredProducts.length === 0) {
+            productTableBody.innerHTML = `
+                <tr>
+                    <td colspan="7" class="px-6 py-12 text-center text-gray-500">
+                        <i class="fas fa-search text-2xl mb-4"></i>
+                        <p>No se encontraron productos</p>
+                        <p class="text-sm mt-2">Intenta con otros filtros</p>
+                    </td>
+                </tr>
+            `;
+            return;
+        }
+        
+        let html = '';
+        filteredProducts.forEach((producto, index) => {
+            const id = index + 1;
+            const stock = parseInt(producto.STOCK) || 0;
+            const stockClass = getStockClass(stock);
+            const stockText = getStockText(stock);
+            
+            html += `
+                <tr class="product-row ${stock === 0 ? 'opacity-70' : ''}">
+                    <td class="px-6 py-4 whitespace-nowrap">${id}</td>
+                    <td class="px-6 py-4 whitespace-nowrap">
+                        ${producto.RUTA_IMAGEN ? 
+                            `<img src="${producto.RUTA_IMAGEN}" alt="${producto.NOMBRE}" 
+                                  class="w-12 h-12 object-cover rounded">` :
+                            `<div class="w-12 h-12 bg-gray-200 rounded flex items-center justify-center">
+                                <i class="fas fa-gem text-gray-400"></i>
+                            </div>`
+                        }
+                    </td>
+                    <td class="px-6 py-4 whitespace-nowrap">
+                        <div class="font-medium">${producto.NOMBRE}</div>
+                        <div class="text-sm text-gray-500">${producto.MATERIAL || ''}</div>
+                    </td>
+                    <td class="px-6 py-4 whitespace-nowrap">
+                        <span class="px-2 py-1 text-xs rounded-full 
+                            ${producto.CATEGORIA === 'ARETE' ? 'bg-blue-100 text-blue-800' : 
+                              producto.CATEGORIA === 'PULSERA' ? 'bg-green-100 text-green-800' : 
+                              producto.CATEGORIA === 'ARRACADAS' ? 'bg-purple-100 text-purple-800' :
+                              producto.CATEGORIA === 'COLLAR' ? 'bg-yellow-100 text-yellow-800' :
+                              'bg-gray-100 text-gray-800'}">
+                            ${producto.CATEGORIA}
+                        </span>
+                    </td>
+                    <td class="px-6 py-4 whitespace-nowrap font-bold text-gold">
+                        $${parseFloat(producto.PRECIO).toFixed(2)}
+                    </td>
+                    <td class="px-6 py-4 whitespace-nowrap">
+                        <span class="px-2 py-1 text-xs font-medium rounded-full ${stockClass}">
+                            ${stockText}
+                        </span>
+                    </td>
+                    <td class="px-6 py-4 whitespace-nowrap">
+                        <button onclick="editProduct(${index})" 
+                                class="text-blue-600 hover:text-blue-900 mr-2"
+                                title="Editar producto">
+                            <i class="fas fa-edit"></i>
+                        </button>
+                        <button onclick="adjustStock(${index})" 
+                                class="text-green-600 hover:text-green-900 mr-2"
+                                title="Ajustar stock">
+                            <i class="fas fa-boxes"></i>
+                        </button>
+                        <button onclick="deleteProduct(${index})" 
+                                class="text-red-600 hover:text-red-900"
+                                title="Eliminar producto">
+                            <i class="fas fa-trash"></i>
+                        </button>
+                    </td>
+                </tr>
+            `;
+        });
+        
+        productTableBody.innerHTML = html;
+    }
+    
+    // Agregar nuevo producto
+    addProductForm.addEventListener('submit', async function(e) {
+        e.preventDefault();
+        
+        const formData = new FormData(this);
+        
+        // Validar campos requeridos
+        const nombre = document.getElementById('nombre').value;
+        const categoria = document.getElementById('categoria').value;
+        const precio = document.getElementById('precio').value;
+        const stock = document.getElementById('stock').value;
+        
+        if (!nombre || !categoria || !precio || stock === '') {
+            alert('❌ Por favor completa todos los campos obligatorios (*)');
+            return;
+        }
+        
+        try {
+            const response = await fetch('/api/productos', {
+                method: 'POST',
+                body: formData
+            });
+            
+            const result = await response.json();
+            
+            if (result.success) {
+                alert('✅ Producto agregado correctamente');
+                this.reset();
+                loadProducts();
+            } else {
+                alert('❌ Error: ' + (result.error || 'No se pudo agregar el producto'));
+            }
+        } catch (error) {
+            console.error('Error agregando producto:', error);
+            alert('❌ Error al agregar el producto: ' + error.message);
+        }
+    });
+    
+    // FUNCIÓN PARA EDITAR PRODUCTO
+    window.editProduct = function(index) {
+        currentProductId = index;
+        const producto = productos[index];
+        
+        if (!producto) {
+            alert('❌ Producto no encontrado');
+            return;
+        }
+        
+        // Llenar formulario de edición
+        document.getElementById('edit-id').value = index;
+        document.getElementById('edit-nombre').value = producto.NOMBRE;
+        document.getElementById('edit-categoria').value = producto.CATEGORIA;
+        document.getElementById('edit-precio').value = producto.PRECIO;
+        document.getElementById('edit-stock').value = producto.STOCK || 0;
+        document.getElementById('edit-material').value = producto.MATERIAL || 'ACERO INOXIDABLE';
+        document.getElementById('edit-descripcion').value = producto.DESCRIPCION || '';
+        document.getElementById('edit-medidas').value = producto.MEDIDAS || '';
+        
+        // Mostrar modal
+        editModal.classList.add('active');
+        document.body.style.overflow = 'hidden';
+    };
+    
+    // FUNCIÓN PARA AJUSTAR STOCK - CORREGIDA
+    window.adjustStock = function(index) {
+        currentProductId = index;
+        const producto = productos[index];
+        
+        if (!producto) {
+            alert('❌ Producto no encontrado');
+            return;
+        }
+        
+        const currentStock = parseInt(producto.STOCK) || 0;
+        
+        console.log('Ajustando stock:', {
+            index: index,
+            id: index + 1,
+            nombre: producto.NOMBRE,
+            stockActual: currentStock
+        });
+        
+        // Llenar formulario de stock
+        document.getElementById('stock-product-id').value = index;
+        document.getElementById('stock-product-name').textContent = producto.NOMBRE;
+        document.getElementById('stock-product-category').textContent = `Categoría: ${producto.CATEGORIA}`;
+        document.getElementById('current-stock').value = currentStock;
+        document.getElementById('stock-quantity').value = currentStock; // Mostrar stock actual como valor inicial
+        estimatedStock.textContent = currentStock;
+        
+        // Resetear el selector de acción a "set" (establecer)
+        document.getElementById('stock-action').value = 'set';
+        
+        // Mostrar modal
+        stockModal.classList.add('active');
+        document.body.style.overflow = 'hidden';
+        
+        // Actualizar el stock estimado
+        updateEstimatedStock();
+    };
+    
+    // FUNCIÓN PARA ELIMINAR PRODUCTO
+    window.deleteProduct = async function(index) {
+        if (!confirm('¿Estás seguro de eliminar este producto? Esta acción no se puede deshacer.')) return;
+        
+        try {
+            // El índice en la API comienza en 1, nuestro array en 0
+            const apiId = index + 1;
+            const response = await fetch(`/api/productos/${apiId}`, {
+                method: 'DELETE'
+            });
+            
+            const result = await response.json();
+            
+            if (result.success) {
+                alert('✅ Producto eliminado correctamente');
+                loadProducts();
+            } else {
+                alert('❌ Error: ' + (result.error || 'No se pudo eliminar el producto'));
+            }
+        } catch (error) {
+            console.error('Error eliminando producto:', error);
+            alert('❌ Error al eliminar el producto');
+        }
+    };
+    
+    // Cerrar modales
+    if (closeModal) {
+        closeModal.addEventListener('click', () => {
+            editModal.classList.remove('active');
+            document.body.style.overflow = 'auto';
+        });
+    }
+    
+    if (cancelEdit) {
+        cancelEdit.addEventListener('click', () => {
+            editModal.classList.remove('active');
+            document.body.style.overflow = 'auto';
+        });
+    }
+    
+    if (closeStockModal) {
+        closeStockModal.addEventListener('click', () => {
+            stockModal.classList.remove('active');
+            document.body.style.overflow = 'auto';
+        });
+    }
+    
+    if (cancelStock) {
+        cancelStock.addEventListener('click', () => {
+            stockModal.classList.remove('active');
+            document.body.style.overflow = 'auto';
+        });
+    }
+    
+    // Cerrar modales al hacer clic fuera
+    editModal.addEventListener('click', (e) => {
+        if (e.target === editModal) {
+            editModal.classList.remove('active');
+            document.body.style.overflow = 'auto';
+        }
+    });
+    
+    stockModal.addEventListener('click', (e) => {
+        if (e.target === stockModal) {
+            stockModal.classList.remove('active');
+            document.body.style.overflow = 'auto';
+        }
+    });
+    
+    // Calcular stock estimado
+    function updateEstimatedStock() {
+        const currentStock = parseInt(document.getElementById('current-stock').value) || 0;
+        const action = document.getElementById('stock-action').value;
+        const quantity = parseInt(document.getElementById('stock-quantity').value) || 0;
+        
+        let estimated = currentStock;
+        
+        if (action === 'add') {
+            estimated = currentStock + quantity;
+        } else if (action === 'subtract') {
+            estimated = Math.max(0, currentStock - quantity);
+        } else if (action === 'set') {
+            estimated = quantity;
+        }
+        
+        // Actualizar el campo de stock estimado
+        const estimatedStockElement = document.getElementById('estimated-stock');
+        if (estimatedStockElement) {
+            estimatedStockElement.textContent = estimated;
+            
+            // Cambiar color según el nivel de stock
+            if (estimated <= 0) {
+                estimatedStockElement.className = 'text-2xl font-bold text-red-600';
+            } else if (estimated <= 3) {
+                estimatedStockElement.className = 'text-2xl font-bold text-yellow-600';
+            } else if (estimated <= 10) {
+                estimatedStockElement.className = 'text-2xl font-bold text-orange-600';
+            } else {
+                estimatedStockElement.className = 'text-2xl font-bold text-green-600';
             }
         }
         
-        // Agregar nuevo producto
-        addProductForm.addEventListener('submit', async function(e) {
+        return estimated;
+    }
+    
+    // Event listeners para actualizar stock estimado
+    if (stockAction) {
+        stockAction.addEventListener('change', updateEstimatedStock);
+    }
+    
+    if (stockQuantity) {
+        stockQuantity.addEventListener('input', updateEstimatedStock);
+    }
+    
+    // AJUSTAR STOCK - SUBMIT DEL FORMULARIO CORREGIDO
+    stockForm.addEventListener('submit', async function(e) {
+        e.preventDefault();
+        
+        const productIndex = parseInt(document.getElementById('stock-product-id').value);
+        const action = document.getElementById('stock-action').value;
+        const quantity = parseInt(document.getElementById('stock-quantity').value) || 0;
+        const producto = productos[productIndex];
+        
+        if (!producto) {
+            alert('❌ Error: Producto no encontrado');
+            return;
+        }
+        
+        let newStock = parseInt(producto.STOCK) || 0;
+        
+        // Calcular nuevo stock basado en la acción
+        if (action === 'add') {
+            newStock += quantity;
+        } else if (action === 'subtract') {
+            newStock = Math.max(0, newStock - quantity);
+        } else if (action === 'set') {
+            newStock = quantity;
+        }
+        
+        console.log('Actualizando stock:', {
+            index: productIndex,
+            apiId: productIndex + 1,
+            producto: producto.NOMBRE,
+            action: action,
+            quantity: quantity,
+            oldStock: producto.STOCK,
+            newStock: newStock
+        });
+        
+        try {
+            // Crear FormData con TODOS los campos necesarios
+            const formData = new FormData();
+            formData.append('nombre', producto.NOMBRE);
+            formData.append('categoria', producto.CATEGORIA);
+            formData.append('descripcion', producto.DESCRIPCION || '');
+            formData.append('material', producto.MATERIAL || 'ACERO INOXIDABLE');
+            formData.append('precio', producto.PRECIO || '0');
+            formData.append('stock', newStock.toString());
+            formData.append('medidas', producto.MEDIDAS || '');
+            formData.append('diametro', producto.DIAMETRO || '');
+            formData.append('longitud', producto.LONGITUD || '');
+            formData.append('largo', producto.LARGO || '');
+            formData.append('pagina', producto.PAGINA || '');
+            
+            // El ID en la API comienza en 1, pero nuestro array index comienza en 0
+            const apiId = productIndex + 1;
+            
+            const response = await fetch(`/api/productos/${apiId}`, {
+                method: 'PUT',
+                body: formData
+            });
+            
+            const result = await response.json();
+            
+            if (result.success) {
+                alert(`✅ Stock actualizado correctamente\n\nProducto: ${producto.NOMBRE}\nNuevo stock: ${newStock}`);
+                stockModal.classList.remove('active');
+                document.body.style.overflow = 'auto';
+                loadProducts(); // Recargar la lista de productos
+            } else {
+                console.error('Error del servidor:', result);
+                alert(`❌ Error: ${result.error || 'No se pudo actualizar el stock'}`);
+            }
+        } catch (error) {
+            console.error('Error actualizando stock:', error);
+            alert(`❌ Error de conexión: ${error.message}`);
+        }
+    });
+    
+    // Editar producto - SUBMIT DEL FORMULARIO
+    editProductForm.addEventListener('submit', async function(e) {
+        e.preventDefault();
+        
+        const formData = new FormData(this);
+        const index = parseInt(document.getElementById('edit-id').value);
+        
+        // Validar campos requeridos
+        const nombre = document.getElementById('edit-nombre').value;
+        const categoria = document.getElementById('edit-categoria').value;
+        const precio = document.getElementById('edit-precio').value;
+        const stock = document.getElementById('edit-stock').value;
+        
+        if (!nombre || !categoria || !precio || stock === '') {
+            alert('❌ Por favor completa todos los campos obligatorios');
+            return;
+        }
+        
+        try {
+            const apiId = index + 1;
+            const response = await fetch(`/api/productos/${apiId}`, {
+                method: 'PUT',
+                body: formData
+            });
+            
+            const result = await response.json();
+            
+            if (result.success) {
+                alert('✅ Producto actualizado correctamente');
+                editModal.classList.remove('active');
+                document.body.style.overflow = 'auto';
+                loadProducts();
+            } else {
+                alert('❌ Error: ' + (result.error || 'No se pudo actualizar el producto'));
+            }
+        } catch (error) {
+            console.error('Error actualizando producto:', error);
+            alert('❌ Error al actualizar el producto');
+        }
+    });
+    
+    // Filtros
+    filterCategory.addEventListener('change', renderProductTable);
+    filterStock.addEventListener('change', renderProductTable);
+    filterSearch.addEventListener('input', debounce(renderProductTable, 300));
+    
+    // Función debounce para búsqueda
+    function debounce(func, wait) {
+        let timeout;
+        return function executedFunction(...args) {
+            const later = () => {
+                clearTimeout(timeout);
+                func(...args);
+            };
+            clearTimeout(timeout);
+            timeout = setTimeout(later, wait);
+        };
+    }
+    
+    // Subir CSV
+    const uploadCsvForm = document.getElementById('upload-csv-form');
+    if (uploadCsvForm) {
+        uploadCsvForm.addEventListener('submit', async function(e) {
             e.preventDefault();
             
             const formData = new FormData(this);
+            const fileInput = document.getElementById('csv-file');
+            
+            if (!fileInput.files[0]) {
+                alert('❌ Por favor selecciona un archivo CSV');
+                return;
+            }
+            
+            if (!confirm('¿Estás seguro de reemplazar el archivo CSV actual? Se creará un backup automático.')) {
+                return;
+            }
             
             try {
-                const response = await fetch('/api/productos', {
+                const response = await fetch('/api/upload-csv', {
                     method: 'POST',
                     body: formData
                 });
@@ -485,101 +1138,37 @@
                 const result = await response.json();
                 
                 if (result.success) {
-                    alert('Producto agregado correctamente');
+                    alert('✅ CSV actualizado correctamente');
                     this.reset();
                     loadProducts();
                 } else {
-                    alert('Error: ' + (result.error || 'No se pudo agregar el producto'));
+                    alert('❌ Error: ' + (result.error || 'No se pudo subir el CSV'));
                 }
             } catch (error) {
-                console.error('Error agregando producto:', error);
-                alert('Error al agregar el producto');
+                console.error('Error subiendo CSV:', error);
+                alert('❌ Error al subir el CSV');
             }
         });
-        
-        // Funciones globales para los botones de acción
-        window.editProduct = function(id) {
-            currentProductId = id;
-            const producto = productos[id - 1];
-            
-            if (!producto) return;
-            
-            // Llenar formulario de edición
-            document.getElementById('edit-id').value = id;
-            document.getElementById('edit-nombre').value = producto.NOMBRE;
-            document.getElementById('edit-categoria').value = producto.CATEGORIA;
-            document.getElementById('edit-precio').value = producto.PRECIO;
-            document.getElementById('edit-descripcion').value = producto.DESCRIPCION || '';
-            
-            // Mostrar modal
-            editModal.classList.add('active');
-            overlay.classList.add('active');
-        };
-        
-        window.deleteProduct = async function(id) {
-            if (!confirm('¿Estás seguro de eliminar este producto?')) return;
-            
-            try {
-                const response = await fetch(`/api/productos/${id}`, {
-                    method: 'DELETE'
-                });
-                
-                const result = await response.json();
-                
-                if (result.success) {
-                    alert('Producto eliminado correctamente');
-                    loadProducts();
-                } else {
-                    alert('Error: ' + (result.error || 'No se pudo eliminar el producto'));
-                }
-            } catch (error) {
-                console.error('Error eliminando producto:', error);
-                alert('Error al eliminar el producto');
-            }
-        };
-        
-        // Cerrar modal de edición
-        if (closeModal) {
-            closeModal.addEventListener('click', () => {
-                editModal.classList.remove('active');
-                overlay.classList.remove('active');
-            });
+    }
+    
+    // Función para debug (opcional, quitar en producción)
+    window.debugProduct = function(index) {
+        const producto = productos[index];
+        if (!producto) {
+            console.error('Producto no encontrado en índice:', index);
+            return;
         }
         
-        if (cancelEdit) {
-            cancelEdit.addEventListener('click', () => {
-                editModal.classList.remove('active');
-                overlay.classList.remove('active');
-            });
-        }
-        
-        // Editar producto
-        editProductForm.addEventListener('submit', async function(e) {
-            e.preventDefault();
-            
-            const formData = new FormData(this);
-            
-            try {
-                const response = await fetch(`/api/productos/${currentProductId}`, {
-                    method: 'PUT',
-                    body: formData
-                });
-                
-                const result = await response.json();
-                
-                if (result.success) {
-                    alert('Producto actualizado correctamente');
-                    editModal.classList.remove('active');
-                    overlay.classList.remove('active');
-                    loadProducts();
-                } else {
-                    alert('Error: ' + (result.error || 'No se pudo actualizar el producto'));
-                }
-            } catch (error) {
-                console.error('Error actualizando producto:', error);
-                alert('Error al actualizar el producto');
-            }
-        });
-    </script>
+        console.log('=== DEBUG PRODUCTO ===');
+        console.log('Índice en array:', index);
+        console.log('ID para API:', index + 1);
+        console.log('Nombre:', producto.NOMBRE);
+        console.log('Categoría:', producto.CATEGORIA);
+        console.log('Stock:', producto.STOCK, '(tipo:', typeof producto.STOCK, ')');
+        console.log('Stock parseado:', parseInt(producto.STOCK));
+        console.log('Producto completo:', producto);
+        console.log('=====================');
+    };
+</script>
 </body>
 </html>
